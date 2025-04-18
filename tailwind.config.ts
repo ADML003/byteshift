@@ -1,17 +1,11 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: ["./app/**/*.{js,ts,jsx,tsx}"],
+  content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {},
   },
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  plugins: [
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    require("daisyui")({
-      themes: ["dark"],
-    }),
-  ],
+  plugins: [require("daisyui")],
 };
 
 export default config;
