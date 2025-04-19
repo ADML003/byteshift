@@ -34,11 +34,16 @@ function VideoUpload() {
     formData.append("originalSize", file.size.toString());
 
     try {
-      const response = await axios.post("/api/video-upload", formData);
+      console.log("FormData:", Array.from(formData.entries())); // Debugging
+      const response = await axios.post("/api/video-upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       alert("Video uploaded successfully!");
       router.push("/"); // Redirect to another page if needed
     } catch (error) {
-      console.error("Error uploading video", error);
+      console.error("Error uploading video:", error);
       alert("Failed to upload video. Please try again.");
     } finally {
       setIsUploading(false);
@@ -49,6 +54,7 @@ function VideoUpload() {
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Upload Video</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Title Input */}
         <div>
           <label className="label">
             <span className="label-text">Title</span>
@@ -62,6 +68,8 @@ function VideoUpload() {
             aria-label="Video Title"
           />
         </div>
+
+        {/* Description Input */}
         <div>
           <label className="label">
             <span className="label-text">Description</span>
@@ -73,6 +81,8 @@ function VideoUpload() {
             aria-label="Video Description"
           />
         </div>
+
+        {/* File Input */}
         <div>
           <label className="label">
             <span className="label-text">Video File</span>
@@ -86,11 +96,15 @@ function VideoUpload() {
             aria-label="Video File"
           />
         </div>
+
+        {/* Loading Spinner */}
         {isUploading && (
           <div className="flex justify-center mt-4">
             <span className="loading loading-spinner loading-lg"></span>
           </div>
         )}
+
+        {/* Submit Button */}
         <button
           type="submit"
           className={`btn btn-primary ${
